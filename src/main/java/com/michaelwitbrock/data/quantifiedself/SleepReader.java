@@ -30,7 +30,7 @@ public class SleepReader {
         File dataFile = new File(classLoader.getResource("example.json").getFile());
 
         //Simple example of getting the Sleep Objects from that JSON
-        new JsonArrayStreamDataSupplier<>(dataFile, Sleep.class) //Got the Stream
+        new JsonArrayStreamDataSupplier<>(dataFile, Sleep.class, null) //Got the Stream
                 .forEachRemaining(nightsRest -> {
                     System.out.println(nightsRest.toString());
                 });
@@ -38,7 +38,7 @@ public class SleepReader {
         
         //Slighly more complex example, using a collector on the sleep objects
         //To produce a histogram over howers of sleep
-        JsonArrayStreamDataSupplier<Sleep> supplier = new JsonArrayStreamDataSupplier(dataFile, Sleep.class);
+        JsonArrayStreamDataSupplier<Sleep> supplier = new JsonArrayStreamDataSupplier(dataFile, Sleep.class, null);
         Map<Integer, Long> ts = new HashMap<>();
         ts = supplier.getStream()
                 .collect(groupingBy(Sleep::getHours, counting()));
